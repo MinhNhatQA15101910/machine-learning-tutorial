@@ -13,7 +13,9 @@ y = dataset.iloc[:, -1].values
 # Splitting the dataset into the Training set and Test set
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=1 / 3, random_state=0
+)
 
 # Training the Simple Linear Regression model on the Training set
 from sklearn.linear_model import LinearRegression
@@ -39,3 +41,10 @@ plt.title("Salary vs Experience (Test set)")
 plt.xlabel("Years of Experience")
 plt.ylabel("Salary")
 plt.show()
+
+# Making a single prediction (for example the salary of an employee with 12 years of experience)
+print(regressor.predict([[12]]))
+
+# Getting the final linear regression equation with the values of the coefficients
+print(regressor.coef_)
+print(regressor.intercept_)
