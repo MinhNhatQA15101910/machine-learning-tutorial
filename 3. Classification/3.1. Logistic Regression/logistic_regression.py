@@ -26,3 +26,9 @@ X_test = sc.transform(X_test)
 
 print(X_train)
 print(X_test)
+
+# Training the Logistic Regression model on the Training set
+from sklearn.linear_model import LogisticRegression
+
+classifier = LogisticRegression(random_state=0)
+classifier.fit(X_train, y_train)
