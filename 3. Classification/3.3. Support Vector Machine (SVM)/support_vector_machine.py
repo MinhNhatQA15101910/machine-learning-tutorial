@@ -1,4 +1,4 @@
-# K-Nearest Neighbors (K-NN)
+# Support Vector Machine (SVM)
 
 # Importing the libraries
 import numpy as np
@@ -24,13 +24,10 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-print(X_train)
-print(X_test)
+# Training the SVM model on the Training set
+from sklearn.svm import SVC
 
-# Training the K-NN model on the Training set
-from sklearn.neighbors import KNeighborsClassifier
-
-classifier = KNeighborsClassifier(n_neighbors=5, metric="minkowski", p=2)
+classifier = SVC(kernel="linear", random_state=0)
 classifier.fit(X_train, y_train)
 
 # Predicting a new result
@@ -56,8 +53,8 @@ from matplotlib.colors import ListedColormap
 
 X_set, y_set = sc.inverse_transform(X_train), y_train
 X1, X2 = np.meshgrid(
-    np.arange(start=X_set[:, 0].min() - 10, stop=X_set[:, 0].max() + 10, step=1),
-    np.arange(start=X_set[:, 1].min() - 1000, stop=X_set[:, 1].max() + 1000, step=1),
+    np.arange(start=X_set[:, 0].min() - 10, stop=X_set[:, 0].max() + 10, step=0.25),
+    np.arange(start=X_set[:, 1].min() - 1000, stop=X_set[:, 1].max() + 1000, step=0.25),
 )
 plt.contourf(
     X1,
@@ -77,7 +74,7 @@ for i, j in enumerate(np.unique(y_set)):
         c=ListedColormap(("red", "green"))(i),
         label=j,
     )
-plt.title("K-NN (Training set)")
+plt.title("SVM (Training set)")
 plt.xlabel("Age")
 plt.ylabel("Estimated Salary")
 plt.legend()
@@ -88,8 +85,8 @@ from matplotlib.colors import ListedColormap
 
 X_set, y_set = sc.inverse_transform(X_test), y_test
 X1, X2 = np.meshgrid(
-    np.arange(start=X_set[:, 0].min() - 10, stop=X_set[:, 0].max() + 10, step=1),
-    np.arange(start=X_set[:, 1].min() - 1000, stop=X_set[:, 1].max() + 1000, step=1),
+    np.arange(start=X_set[:, 0].min() - 10, stop=X_set[:, 0].max() + 10, step=0.25),
+    np.arange(start=X_set[:, 1].min() - 1000, stop=X_set[:, 1].max() + 1000, step=0.25),
 )
 plt.contourf(
     X1,
@@ -109,7 +106,7 @@ for i, j in enumerate(np.unique(y_set)):
         c=ListedColormap(("red", "green"))(i),
         label=j,
     )
-plt.title("K-NN (Test set)")
+plt.title("SVM (Test set)")
 plt.xlabel("Age")
 plt.ylabel("Estimated Salary")
 plt.legend()
