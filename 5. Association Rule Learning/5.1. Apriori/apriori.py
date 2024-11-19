@@ -1,4 +1,5 @@
 # Apriori
+
 # Importing the libraries
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,3 +22,31 @@ rules = apriori(
     min_length=2,
     max_length=2,
 )
+
+# Visualizing the results
+
+## Displaying the first results coming directly from the output of the apriori function
+results = list(rules)
+print(results)
+
+
+## Putting the results well organized into a Pandas DataFrame
+def inspect(results):
+    lhs = [tuple(result[2][0][0])[0] for result in results]
+    rhs = [tuple(result[2][0][1])[0] for result in results]
+    supports = [result[1] for result in results]
+    confidences = [result[2][0][2] for result in results]
+    lifts = [result[2][0][3] for result in results]
+    return list(zip(lhs, rhs, supports, confidences, lifts))
+
+
+resultsInDataFrame = pd.DataFrame(
+    inspect(results),
+    columns=["Left Hand Side", "Right Hand Side", "Support", "Confidence", "Lift"],
+)
+
+## Displaying the results non sorted
+print(resultsInDataFrame)
+
+## Displaying the results sorted by descending lifts
+print(resultsInDataFrame.nlargest(n=10, columns="Lift"))
