@@ -23,14 +23,19 @@ for i in range(0, 1000):
     review = review.split()
 
     ps = PorterStemmer()
-    review = [
-        ps.stem(word) for word in review if not word in set(stopwords.words("english"))
-    ]
+    all_stopwords = stopwords.words("english")
+    all_stopwords.remove("not")
+    review = [ps.stem(word) for word in review if not word in set(all_stopwords)]
     review = " ".join(review)
     corpus.append(review)
-    print(review)
 
 ## Creating the Bag of Words model
+from sklearn.feature_extraction.text import CountVectorizer
+
+cv = CountVectorizer(max_features=1500)
+X = cv.fit_transform(corpus).toarray()
+y = dataset.iloc[:, -1].values
+
 ## Splitting the dataset into the Training set and Test set
 ## Training the Naive Bayes model on the Training set
 ## Predicting the test set results
