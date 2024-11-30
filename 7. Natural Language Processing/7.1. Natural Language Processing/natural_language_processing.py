@@ -22,6 +22,14 @@ for i in range(0, 1000):
     review = review.lower()
     review = review.split()
 
+    ps = PorterStemmer()
+    review = [
+        ps.stem(word) for word in review if not word in set(stopwords.words("english"))
+    ]
+    review = " ".join(review)
+    corpus.append(review)
+    print(review)
+
 ## Creating the Bag of Words model
 ## Splitting the dataset into the Training set and Test set
 ## Training the Naive Bayes model on the Training set
