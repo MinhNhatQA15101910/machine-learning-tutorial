@@ -43,10 +43,10 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.20, random_state=0
 )
 
-## Training the SVM model on the Training set
-from sklearn.svm import SVC
+## Training the Naive Bayes model on the Training set
+from sklearn.naive_bayes import GaussianNB
 
-classifier = SVC(kernel="linear", random_state=0)
+classifier = GaussianNB()
 classifier.fit(X_train, y_train)
 
 ## Predicting the test set results
@@ -63,3 +63,34 @@ cm = confusion_matrix(y_test, y_pred)
 print(cm)
 accuracy = accuracy_score(y_test, y_pred)
 print(accuracy)
+
+## Predicting if a single review is positive or negative
+### Positive review
+new_review = "I love this restaurant so much"
+new_review = re.sub("[^a-zA-Z]", " ", new_review)
+new_review = new_review.lower()
+new_review = new_review.split()
+ps = PorterStemmer()
+all_stopwords = stopwords.words("english")
+all_stopwords.remove("not")
+new_review = [ps.stem(word) for word in new_review if not word in set(all_stopwords)]
+new_review = " ".join(new_review)
+new_corpus = [new_review]
+new_X_test = cv.transform(new_corpus).toarray()
+new_y_pred = classifier.predict(new_X_test)
+print(new_y_pred)
+
+## Negative review
+new_review = "I hate this restaurant so much"
+new_review = re.sub("[^a-zA-Z]", " ", new_review)
+new_review = new_review.lower()
+new_review = new_review.split()
+ps = PorterStemmer()
+all_stopwords = stopwords.words("english")
+all_stopwords.remove("not")
+new_review = [ps.stem(word) for word in new_review if not word in set(all_stopwords)]
+new_review = " ".join(new_review)
+new_corpus = [new_review]
+new_X_test = cv.transform(new_corpus).toarray()
+new_y_pred = classifier.predict(new_X_test)
+print(new_y_pred)
