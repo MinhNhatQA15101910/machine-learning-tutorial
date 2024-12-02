@@ -56,7 +56,11 @@ ann.add(tf.keras.layers.Dense(units=1, activation="sigmoid"))
 
 ## Part 3 - Training the ANN
 ### Compiling the ANN
+ann.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+
 ### Training the ANN on the Training set
+ann.fit(X_train, y_train, batch_size=32, epochs=100)
+
 ## Part 4 - Making the predictions and evaluating the model
 ### Predicting the result of a single observation
 ### Predicting the Test set results
