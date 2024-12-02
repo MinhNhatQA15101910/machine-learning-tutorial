@@ -29,8 +29,6 @@ ct = ColumnTransformer(
 )
 X = np.array(ct.fit_transform(X))
 
-print(X)
-
 ### Splitting the dataset into the Training set and Test set
 from sklearn.model_selection import train_test_split
 
@@ -45,9 +43,17 @@ X_test = sc.transform(X_test)
 
 ## Part 2 - Building the ANN
 ### Initializing the ANN
+ann = tf.keras.models.Sequential()
+
 ### Adding the input layer and the first hidden layer
+ann.add(tf.keras.layers.Dense(units=6, activation="relu"))
+
 ### Adding the second hidden layer
+ann.add(tf.keras.layers.Dense(units=6, activation="relu"))
+
 ### Adding the output layer
+ann.add(tf.keras.layers.Dense(units=1, activation="sigmoid"))
+
 ## Part 3 - Training the ANN
 ### Compiling the ANN
 ### Training the ANN on the Training set
