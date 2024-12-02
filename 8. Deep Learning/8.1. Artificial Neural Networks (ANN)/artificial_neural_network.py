@@ -63,5 +63,29 @@ ann.fit(X_train, y_train, batch_size=32, epochs=100)
 
 ## Part 4 - Making the predictions and evaluating the model
 ### Predicting the result of a single observation
+print(
+    ann.predict(sc.transform([[1.0, 0.0, 0.0, 600, 1, 40, 3, 60000, 2, 1, 1, 50000]]))
+    > 0.5
+)
+
 ### Predicting the Test set results
+y_pred = ann.predict(X_test)
+y_pred = y_pred > 0.5
+
+print(
+    np.concatenate(
+        (
+            y_pred.reshape(len(y_pred), 1),
+            y_test.reshape(len(y_test), 1),
+        ),
+        1,
+    )
+)
+
 ### Making the Confusion Matrix
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+accuracy = accuracy_score(y_test, y_pred)
+print(accuracy)
